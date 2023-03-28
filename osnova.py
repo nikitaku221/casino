@@ -42,6 +42,7 @@ def game():
 
 
 def pl_ruletka():
+    global money
     global game_money
     global play
     try:
@@ -50,7 +51,8 @@ def pl_ruletka():
         if game_money > money:
             print('Вы ввели ссуму больше чем у вас на банке.\nНапишите другую ссуму.')
             pl_ruletka()
-        elif game_money < money:
+        elif game_money <= money:
+            money = money - game_money
             print(f"Отлично! ваша ссума {game_money}")
             print('Время выбрать на что вы будите ставить.')
             if play == "Рулетка":
@@ -64,25 +66,46 @@ def pl_ruletka():
         pl_ruletka()
 
 def play_ruletka():
-    ggame=input("В рулетке вы можете поставить на 'цвет' и на 'цифру\n\t").title()
+    ggame=input("В рулетке вы можете поставить на 'цвет' и на 'цифру'\n\t").title()
     if ggame == "Цвет":
         ruletka_svet()
     elif ggame == "Цифра" or ggame == "Цифру":
         print()
 
 def ruletka_svet():
-    stavka = input("Вы можете поставить свою ставку на зелённый цвет и крассный цвет\n\t").title()
+    global money
+    global game_money
+    stavka = input("Вы можете поставить свою ставку на зелённый цвет и крассный цвет.\nЕсли вы хотите вернуться назад напишите: Назад\n\t").title()
     color = ["Крассный","Чёрный"]
     colors = random.choice(color)
     if stavka == colors:
         print("Вы выиграли!!")
+        game_money= game_money * 2
+        money = money + game_money
+        print(money)
     elif color is not None:
         print("Вы ввели не тот цвет")
         ruletka_svet()
+    elif stavka == "Назад":
+        game()
     else:
         print(f"Вы проиграли. Выпал {colors} цвет\n")
-        dd = input("Вы хотите дальше продолжить играть напишите Да или Нет")
+        ruletka_svet()
 
-
-
+def ruletka_chislo():
+    global money
+    global game_money
+    try:
+        vibr_chisla=int(input("Напишите числа на которую вы поставить ставку от 1 до 36 (нельзя будет поменять число)\n\t"))
+        chislo = random.randint(1, 36)
+        if vibr_chisla == chislo:
+            print("Вы выиграли!!")
+            game_money= game_money * 3
+            money = money + game_money
+        else:
+            print(f"Вы проиграли. Выпало число {chislo}\n")
+            ruletka_svet()
+    except:
+        print("вам просто нужно ввести сумму")
+        ruletka_chislo()
 hi()

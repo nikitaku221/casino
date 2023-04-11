@@ -108,4 +108,25 @@ def ruletka_chislo():
     except:
         print("вам просто нужно ввести сумму")
         ruletka_chislo()
+
+def balans():
+    global money
+    
+    bal=input("Вы хотите 'пополнить' балан или 'снять' денги?").lower()
+    if bal== 'пополнить':
+        PL_balans()
+    elif bal == 'снять':
+        SN_balans()
+
+def PL_balans():
+    global money
+    try:
+         popol=int(input("ведите число которые вы хотите поставить на баланс"))
+         money+= popol
+    except:
+        print("ВЫ ДОЛЖНЫ ВВЕСТИ ЧИСЛО!!!")
+        PL_balans()
+
+def SN_balans():
+    print()
 hi()
